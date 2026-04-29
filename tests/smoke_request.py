@@ -6,15 +6,22 @@ import requests
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url", default="http://127.0.0.1:8000/v1/relation/predict")
+    parser.add_argument("--url", default="http://127.0.0.1:8000/v1/chat/completions")
     args = parser.parse_args()
 
     payload = {
-        "sentence": "Barack Obama was born in Honolulu.",
-        "entity_1": "Barack Obama",
-        "entity_2": "Honolulu",
-        "relation_name": "place_of_birth",
-        "relation_description": "entity_1 was born in entity_2",
+        "mode": "review",
+        "messages": [
+            {
+                "role": "user",
+                "content": (
+                    "Items:\n"
+                    '[{"sample_id":"s1","text":"Barack Obama was born in Honolulu.",'
+                    '"head":"Barack Obama","tail":"Honolulu",'
+                    '"candidate_labels":["/people/person/place_of_birth"]}]'
+                ),
+            }
+        ],
     }
 
     response = requests.post(args.url, json=payload, timeout=120)

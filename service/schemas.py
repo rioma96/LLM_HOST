@@ -1,29 +1,6 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
-
-
-class RelationRequest(BaseModel):
-    sentence: str = Field(..., min_length=3)
-    entity_1: str = Field(..., min_length=1)
-    entity_2: str = Field(..., min_length=1)
-    relation_name: str = Field(..., min_length=1)
-    relation_description: str = Field(default="")
-
-
-class RelationResponse(BaseModel):
-    relation_present: bool
-    confidence: float = Field(..., ge=0.0, le=1.0)
-    reason_short: str
-    raw_output: str
-
-
-class PromptRequest(BaseModel):
-    prompt: str = Field(..., min_length=3)
-
-
-class PromptResponse(BaseModel):
-    output_text: str
 
 
 class ModelStatusResponse(BaseModel):
@@ -37,7 +14,7 @@ class ValidationSample(BaseModel):
     model_config = {"extra": "ignore"}
 
     sample_id: str = Field(..., min_length=1)
-    keep: List[str] = Field(default_factory=list)
+    keep: Optional[List[str]] = None
     delete: bool = False
     notes: str = Field(default="")
 

@@ -1,8 +1,5 @@
-.venv/
-venv/
+.env
+.hf_cache/
+logs/
 __pycache__/
 *.pyc
-logs/
-uvicorn.pid
-.vscode/
-.idea/
