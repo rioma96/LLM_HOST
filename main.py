@@ -137,7 +137,7 @@ def list_models() -> Dict[str, Any]:
 
 
 @app.post("/v1/chat/completions")
-def chat_completions(
+async def chat_completions(
     payload: Dict[str, Any],
     authorization: Optional[str] = Header(default=None),
 ) -> Dict[str, Any]:
@@ -183,7 +183,7 @@ def chat_completions(
 
     try:
         if hasattr(oracle, "generate_chat_text_with_constraint"):
-            raw_output_text = oracle.generate_chat_text_with_constraint(
+            raw_output_text = await oracle.generate_chat_text_with_constraint(
                 messages,
                 constraint_schema=schema,
                 max_new_tokens=max_tokens,
@@ -191,7 +191,7 @@ def chat_completions(
                 top_p=top_p,
             )
         else:
-            raw_output_text = oracle.generate_chat_text(
+            raw_output_text = await oracle.generate_chat_text(
                 messages,
                 max_new_tokens=max_tokens,
                 temperature=temperature,
